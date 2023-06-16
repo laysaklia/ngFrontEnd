@@ -1,8 +1,9 @@
 <header><h1>{{siteName}}</h1></header>
 
 <nav>
-    <a routerLink="home">Início</a> &nbsp;
-    <a routerLink="contacts">Contatos</a>
+    <a routerLink="home" title="Página inicial" routerLinkActive="active" ariaCurrentWhenActive="page">Início</a> &nbsp;
+    <a routerLink="contacts" title="Faça contato" routerLinkActive="active" ariaCurrentWhenActive="page">Contatos</a> &nbsp;
+    <span *ngIf="user; then userProfile else userLogin"></span>
 </nav>
 
 <router-outlet></router-outlet>
@@ -10,3 +11,14 @@
 <footer>
     &copy; 2023 André Luferat
 </footer>
+
+<ng-template #userLogin>
+    <a routerLink="/login" id="user" title="Perfil do usuário" routerLinkActive="active" ariaCurrentWhenActive="page">
+        Login
+    </a>
+</ng-template>
+<ng-template #userProfile>
+    <a routerLink="/profile" id="user" title="Perfil do usuário" routerLinkActive="active" ariaCurrentWhenActive="page">
+        <img src="{{user.photoURL}}" alt="Perfil de {{user.displayName}}" referrerpolicy="no-referrer">
+    </a>
+</ng-template>
