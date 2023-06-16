@@ -11,13 +11,21 @@ import { ThemeComponent } from './theme/theme.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 
+import { environment } from '../environments/environment';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+import { LoginComponent } from './login/login.component';
+import { ProfileComponent } from './profile/profile.component';
+
 @NgModule({
   declarations: [
     AppComponent,
     ContactsComponent,
     HomeComponent,
     E404Component,
-    ThemeComponent
+    ThemeComponent,
+    LoginComponent,
+    ProfileComponent
   ],
   imports: [
     HttpClientModule,
@@ -26,10 +34,10 @@ import { HttpClientModule } from '@angular/common/http';
     ReactiveFormsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: !isDevMode(),
-      // Register the ServiceWorker as soon as the application is stable
-      // or after 30 seconds (whichever comes first).
       registrationStrategy: 'registerWhenStable:30000'
-    })
+    }),
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth())
   ],
   providers: [],
   bootstrap: [AppComponent]

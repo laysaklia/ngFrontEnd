@@ -14,7 +14,7 @@ export class ContactsComponent {
   formContacts!: FormGroup;
   contact!: Contacts;
   success: boolean = false;
-  firstName: String = "";
+  firstName: String = "Visitante";
 
   constructor(
     private formBuilder: FormBuilder,
@@ -24,6 +24,7 @@ export class ContactsComponent {
 
   ngOnInit(): void {
     this.createForm();
+    this.success = false;
   }
 
   createForm() {
@@ -63,6 +64,11 @@ export class ContactsComponent {
 
     this.formContacts.reset();
 
+  }
+
+  reset() {
+    this.success = false;
+    return false;
   }
 
 } 
