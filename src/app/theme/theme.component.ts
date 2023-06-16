@@ -1,4 +1,4 @@
-import { Component, OnDestroy, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { environment } from 'src/environments/environment';
 import { Auth, User, authState } from '@angular/fire/auth';
 import { Subscription } from 'rxjs';
@@ -28,6 +28,5 @@ export class ThemeComponent {
   ngOnDestroy() {
     this.authStateSubscription.unsubscribe();
   }
-
 
 }
