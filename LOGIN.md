@@ -71,6 +71,8 @@ Como vamos criar um *front-end* com *Angular* que é mantido pelo Google, a melh
 ng add @angular/fire
 ```
 
+> Devido a algumas configurações de restrição da rede, o processo de instalação se encerra abruptamente com um erro. Caso isso aconteça, verifique se a biblioteca foi baixada no caminho `node_modules/@Angular/fire`. Se esta pata existe, pode seguir no desenvolvimento.
+
 ### Integrando
  - Volte à *Dashboard* do projeto no Firebase.com.
  - Na barra lateral, ao lado de "Visão geral do projeto", clique na engrenagem (⚙) → Configurações do projeto.
