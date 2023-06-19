@@ -1,14 +1,15 @@
+
 # Login Social com Angular e Firebase
 O login social permite a autenticação do usuário no seu aplicativo usando as credenciais de um provedor federado conhecido como Google, Facebook, Microsoft, Github, etc.
 
 #### Vantagens
  - Diminui a quantidade de código para autenticar usuários.
      - API já vem pronta.
- - Não precisa de ferramentas de confirmação de identidade.
+ - Não precisa de ferramentas de confirmação de identidade, troca de senha, alteração de perfil, etc..
  - Não tem custo para o site. 
  - Ameniza problemas com LGPD, políticas de privacidade e tratamento de dados pessoais.
 #### Desvantagens
-- O provedor envia somente dados públicos.
+- O provedor envia somente dados públicos → Nome social, e-mail, foto e id local.
 - Para dados mais completos, precisamos solicitar ao usuário.
 - O aplicativo precisa ter SSL/HTTPS.
 - É necessário ter uma conta de "desenvolvedor" no provedor federado.
@@ -178,16 +179,16 @@ export class AdminThemeComponent implements OnDestroy {
 Será necessário adicionar os componentes para fazer login e para exibir o perfil do usuário:
  - Volte ao *Node.js command prompt* com a raiz do projeto aberta e crie os componentes:
 ```javascript
-ng generate component login
+ng generate component pages/login
 •••
-ng generate component profile
+ng generate component pages/profile
 •••
 ```
  - Adicione as rotas para eles, editando `src/app/app-routing.module.ts`:
 ```javascript
 ••• Outros imports foram omitidos. Não os altere.
-import { LoginComponent } from './login/login.component';
-import { ProfileComponent } from './profile/profile.component';
+import { LoginComponent } from './pages/login/login.component';
+import { ProfileComponent } from './pages/profile/profile.component';
 
 const routes: Routes = [
 ••• Outras chaves foram omitidas. Não as altere.
@@ -211,9 +212,8 @@ O Firebase suporta duas interfaces (view) de autenticação para exibir a págin
      - Este formato às vezes falha no navegador e o usuário é levado a uma página de "erro 404".
      - Este é o formato mais recomendado para aplicativos mobile.
 O código de exemplo, suporta ambos os modos, bastando (des)comentar conforme sua preferência.
-```
-src/login.component.ts
-```
+
+Edite `src/pages/login/login.component.ts`:
 ```javascript
 import { Component, inject } from '@angular/core';
 import { GoogleAuthProvider, Auth, signInWithPopup, signInWithRedirect } from '@angular/fire/auth';
@@ -236,7 +236,7 @@ export class LoginComponent {
     signInWithPopup(this.auth, new GoogleAuthProvider())
     // signInWithRedirect(this.auth, this.providers[provider])
       .then((a) => {
-        this.router.navigate(['/admin/home']);
+        this.router.navigate(['/home']);
       })
       .catch((error) => {
         console.error(error.code, error.message, error.customData.email);
@@ -245,9 +245,7 @@ export class LoginComponent {
   }
 }
 ```
-```
-login.component.html
-```
+Edite `src/pages/login/login.component.html`:
 ```html
 <h2>Login / Entrar</h2>
 <p>Você precisa estar logado(a) para acessar os recursos do aplicativo.</p>
@@ -255,7 +253,7 @@ login.component.html
     <button (click)="login('google')">Entrar com o Google</button>
 </p>
 ```
-### Permitindo e bloqueando
+### Permitindo e bloqueando rotas
 Agora que o usuário pode se autenticar, podemos definir que rotas ele pode ou não pode acessar, conforme sua condição. Isso será feito em `src/app/app-routing.module.ts` usando `Auth-Guards`. Por exemplo:
  - Somente usuário logado pode acessar a rota `/profile` para ver seu perfil. Essa rota não é permitida para não logados.
  - Somente usuário não logado pode acessar a rota `/login`, que não é permitida para usuário logado.
@@ -295,3 +293,77 @@ const routes: Routes = [
 export class AppRoutingModule { }
 ```
 Repita as configurações para as rotas que deseja controlar o acesso.
+
+### Página de Perfil
+Esta página, além de exibir os dados de perfil do usuário logado, permite que ele acesse seu perfil completo no Google e também faça *logout*.
+
+Edite `src/app/pages/profile/profile.component.ts`:
+```javascript
+import { Component, inject } from '@angular/core';
+import { Auth, User, authState } from '@angular/fire/auth';
+import { Subscription } from 'rxjs';
+
+@Component({
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrls: ['./profile.component.css']
+})
+export class ProfileComponent {
+
+  auth: Auth = inject(Auth);
+  authState$ = authState(this.auth);
+  authStateSubscription = new Subscription;
+  user: any;
+
+  constructor() { }
+
+  async ngOnInit() {
+    this.authStateSubscription = this.authState$.subscribe(
+      (userData: User | null) => {
+        if (userData) this.user = userData
+        console.log(this.user)
+      }
+    )
+  }
+
+  ngOnDestroy() {
+    this.authStateSubscription.unsubscribe();
+  }
+
+  logout() {
+    this.auth.signOut();
+    alert('Você saiu do aplicativo.');
+    location.href = "/home";
+  }
+
+  toProfile() {
+    window.open('https://myaccount.google.com/', '_blank')
+  }
+
+}
+```
+Edite também `src/app/pages/profile/profile.component.html`:
+```javascript
+<div *ngIf="user">
+
+    <h2>Perfil do usuário</h2>
+    <p>Seu perfil é gerenciado pelo Google.</p>
+
+    <img src="{{user.photoURL}}" alt="{{user.displayName}}">
+
+    <h3>{{user.displayName}}</h3>
+    <ul>
+        <li><strong>E-mail:</strong> {{user.email}}</li>
+        <li><strong>Cadastro:</strong> {{user.metadata.creationTime | date: 'dd/MM/yyyy HH:mm'}}</li>
+        <li><strong>Último login:</strong> {{user.metadata.lastSignInTime | date: 'dd/MM/yyyy HH:mm'}}</li>
+    </ul>
+
+    <p>Clique no botão abaixo para ver/editar seu perfil.</p>
+    <button (click)="toProfile()"><i class="fa-brands fa-google fa-fw"></i> Perfil no Google</button>
+
+    <p>Clique no botão abaixo para sair do aplicativo neste dispositivo.
+        Você precisará entrar novamente para ter acesso aos recursos restritos do site.</p>
+    <button (click)="logout()"><i class="fa-solid fa-right-from-bracket fa-fw"></i> Sair / Logout</button>
+
+</div>
+```

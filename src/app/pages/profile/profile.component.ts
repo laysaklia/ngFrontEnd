@@ -1,6 +1,5 @@
 import { Component, inject } from '@angular/core';
 import { Auth, User, authState } from '@angular/fire/auth';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -15,7 +14,7 @@ export class ProfileComponent {
   authStateSubscription = new Subscription;
   user: any;
 
-  constructor(public router: Router) { }
+  constructor() { }
 
   async ngOnInit() {
     this.authStateSubscription = this.authState$.subscribe(
@@ -33,7 +32,7 @@ export class ProfileComponent {
   logout() {
     this.auth.signOut();
     alert('Você saiu do aplicativo.');
-    this.router.navigate(['/home']);
+    location.href = "/home";
   }
 
   toProfile() {

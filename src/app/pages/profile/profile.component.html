@@ -8,8 +8,8 @@
     <h3>{{user.displayName}}</h3>
     <ul>
         <li><strong>E-mail:</strong> {{user.email}}</li>
-        <li><strong>Cadastro:</strong> {{user.metadata.creationTime}}</li>
-        <li><strong>Último login:</strong> {{user.metadata.lastSignInTime}}</li>
+        <li><strong>Cadastro:</strong> {{user.metadata.creationTime | date: 'dd/MM/yyyy HH:mm'}}</li>
+        <li><strong>Último login:</strong> {{user.metadata.lastSignInTime | date: 'dd/MM/yyyy HH:mm'}}</li>
     </ul>
 
     <p>Clique no botão abaixo para ver/editar seu perfil.</p>

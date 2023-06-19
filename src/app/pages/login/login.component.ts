@@ -20,9 +20,9 @@ export class LoginComponent {
     console.log(environment.firebase.apiKey);
 
     signInWithPopup(this.auth, new GoogleAuthProvider())
-    // signInWithRedirect(this.auth, this.providers[provider])
+      // signInWithRedirect(this.auth, new GoogleAuthProvider())
       .then((a) => {
-        this.router.navigate(['/admin/home']);
+        location.href = '/home';
       })
       .catch((error) => {
         console.error(error.code, error.message, error.customData.email);
