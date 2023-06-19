@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, FormGroup, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Contacts } from './contacts.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
@@ -11,10 +11,33 @@ import { environment } from 'src/environments/environment';
 })
 export class ContactsComponent {
 
-  formContacts!: FormGroup;
+  contactForm!: FormGroup;
   contact!: Contacts;
   success: boolean = false;
   firstName: String = "Visitante";
+
+  validationMessages: any = {
+    nome: {
+      required: 'O nome é obrigatório.'
+    },
+    email: {
+      required: 'O email é obrigatório.',
+      email: 'Digite um email válido.'
+    },
+    assunto: {
+      required: 'O assunto é obrigatório.'
+    },
+    mensagem: {
+      required: 'A mensagem é obrigatória.'
+    }
+  }
+
+  formErrors: any = {
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  }
 
   constructor(
     private formBuilder: FormBuilder,
@@ -25,24 +48,49 @@ export class ContactsComponent {
   ngOnInit(): void {
     this.createForm();
     this.success = false;
+
+    this.contactForm.valueChanges.subscribe(() => {
+      this.updateValidationMessages();
+    });
   }
 
   createForm() {
-    this.formContacts = this.formBuilder.group({
-      name: [],
-      email: [],
-      subject: [],
-      message: []
+    this.contactForm = this.formBuilder.group({
+      name: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
+      subject: ['', Validators.required],
+      message: ['', Validators.required]
     });
+  }
+
+  updateValidationMessages() {
+    for (const field in this.formErrors) {
+      if (Object.prototype.hasOwnProperty.call(this.formErrors, field)) {
+
+        this.formErrors[field] = '';
+
+        const control = this.contactForm.get(field);
+        if (control && control.dirty && !control.valid) {
+          const messages = this.validationMessages[field];
+          for (const key in control.errors) {
+            if (Object.prototype.hasOwnProperty.call(control.errors, key)) {
+              this.formErrors[field] += messages[key] + ' ';
+            }
+          }
+        }
+      }
+    }
   }
 
   sendContact() {
 
-    this.contact = this.formContacts.value;
+    if (this.contactForm.invalid) {
+      return;
+    }
+
+    this.contact = this.contactForm.value;
     this.contact.date = new Date();
     this.contact.status = 'sended';
-
-    console.log(this.contact);
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -62,7 +110,7 @@ export class ContactsComponent {
         }
       );
 
-    this.formContacts.reset();
+    this.contactForm.reset();
 
   }
 

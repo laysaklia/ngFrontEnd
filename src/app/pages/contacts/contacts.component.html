@@ -1,31 +1,35 @@
 <h2>Faça Contato</h2>
 
-<form *ngIf="!success" [formGroup]="formContacts" (ngSubmit)="sendContact()">
+<form *ngIf="!success" [formGroup]="contactForm" (ngSubmit)="sendContact()">
 
     <p>Preencha todos os campos abaixo para entrar em contato com a equipe do site.</p>
 
     <p>
         <label for="name">Nome:</label>
         <input type="text" name="name" id="name" formControlName="name">
+        <span class="error-message" *ngIf="formErrors.name">{{ formErrors.name }}</span>
     </p>
 
     <p>
         <label for="email">E-mail:</label>
         <input type="email" name="email" id="email" formControlName="email">
+        <span class="error-message" *ngIf="formErrors.email">{{ formErrors.email }}</span>
     </p>
 
     <p>
         <label for="subject">Assunto:</label>
         <input type="text" name="subject" id="subject" formControlName="subject">
+        <span class="error-message" *ngIf="formErrors.subject">{{ formErrors.subject }}</span>
     </p>
 
     <p>
         <label for="message">Mensagem:</label>
         <textarea name="message" id="message" formControlName="message"></textarea>
+        <span class="error-message" *ngIf="formErrors.message">{{ formErrors.message }}</span>
     </p>
 
     <p>
-        <button type="submit">Enviar</button>
+        <button type="submit" [disabled]="contactForm.invalid">Enviar</button>
     </p>
 
 </form>
