@@ -1,6 +1,8 @@
 
 # Login Social com Angular e Firebase
-O login social permite a autenticação do usuário no seu aplicativo usando as credenciais de um provedor federado conhecido como Google, Facebook, Microsoft, Github, etc.
+O login social permite a autenticação do usuário no seu aplicativo usando as credenciais de um provedor federado conhecido como Google, Facebook, Microsoft, Github, etc. 
+
+Para isso, o aplicativo e os provedores usam o protocolo [Oauth2](https://pt.wikipedia.org/wiki/OAuth), um protocolo de autorização que permite que aplicativos obtenham acesso limitado a contas de usuários em um serviço HTTP sem a necessidade de enviar seu usuário e senha.
 
 #### Vantagens
  - Diminui a quantidade de código para autenticar usuários.
