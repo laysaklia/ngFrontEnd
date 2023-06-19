@@ -52,11 +52,11 @@ Um aplicativo do Firebase é um **end point** que vai conectar os serviços do b
 Esta é a ferramenta do Firebase que integra o *login social* ao nosso *front-end*. Inicialmente, usaremos somente a autenticação pelo próprio Google porque ela já estará previamente configurada. Para usar outros provedores ou outras formas de autenticação, é necessário se aprofundar mais na documentação da ferramenta. 
 
  - Clique em "Authentication" na tela principal ou em "Criação" → Authentication no menu lateral.
- - Na tela "Authentication", clique em [Vamos começar].
+ - Na tela "Authentication", clique em <kbd>Vamos começar</kbd>.
  - Na lista de "Provedores de login", clique em "Google".
  - Na "caixa" do Google, cheque o botão "Ativar".
  - Logo abaixo, clique na caixa "E-mail de suporte do projeto" e no seu e-mail.
- - Mais abaixo, clique no botão [Salvar].
+ - Mais abaixo, clique no botão <kbd>Salvar</kbd>.
  - Observe o status "Ativado" ao lago do Google.
  - Nesta mesma página, na guia "Users" podemos ver os usuários logados. Obviamente, a lista estará ainda vazia.
 
@@ -70,8 +70,10 @@ Como vamos criar um *front-end* com *Angular* que é mantido pelo Google, a melh
 ```
 ng add @angular/fire
 ```
+ - Na seleção das *features*, marque apenas `Authentication`.
+ - Quando aparece "Allow Firebase to collect CLI and Emulator Suite usage and error reporting information? [Y/n]", apenas tecle <kbd>Ctrl</kbd> + <kbd>C</kbd> para interromper a instalação. Não precisamos seguir o processo até o final. 
 
-> Devido a algumas configurações de restrição da rede, o processo de instalação se encerra abruptamente com um erro. Caso isso aconteça, verifique se a biblioteca foi baixada no caminho `node_modules/@Angular/fire`. Se esta pata existe, pode seguir no desenvolvimento.
+> Devido a algumas configurações de restrição da rede escolar, o processo de instalação normal se encerra abruptamente com um erro. Caso isso aconteça, verifique se a biblioteca foi baixada no caminho `node_modules/@Angular/fire`. Se esta pasta existe, pode seguir no desenvolvimento.
 
 ### Integrando
  - Volte à *Dashboard* do projeto no Firebase.com.
