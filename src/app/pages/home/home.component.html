@@ -1,1 +1,8 @@
-<p>home works!</p>
+<p>Clique em um treco para ver os detalhes, editar e apagar.</p>
+<ul *ngIf="things">
+
+    <li *ngFor="let thing of things">
+        <a routerLink="/view/{{thing.id}}"><span>{{ thing.name }}</span></a>
+    </li>
+
+</ul>

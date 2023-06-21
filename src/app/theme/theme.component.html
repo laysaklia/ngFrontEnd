@@ -1,8 +1,11 @@
-<header><h1>{{siteName}}</h1></header>
+<header>
+    <h1>{{siteName}}</h1>
+</header>
 
 <nav>
-    <a routerLink="home" title="Página inicial" routerLinkActive="active" ariaCurrentWhenActive="page">Início</a> &nbsp;
-    <a routerLink="contacts" title="Faça contato" routerLinkActive="active" ariaCurrentWhenActive="page">Contatos</a> &nbsp;
+    <a routerLink="home" title="Página inicial" routerLinkActive="active">Início</a> &nbsp;
+    <a routerLink="new" title="Novo treco" routerLinkActive="active">Novo</a> &nbsp;
+    <a routerLink="contacts" title="Faça contato" routerLinkActive="active">Contatos</a> &nbsp;
     <span *ngIf="user; then userProfile else userLogin"></span>
 </nav>
 
@@ -13,12 +16,13 @@
 </footer>
 
 <ng-template #userLogin>
-    <a routerLink="/login" id="user" title="Perfil do usuário" routerLinkActive="active" ariaCurrentWhenActive="page">
-        Login
+    <a routerLink="/login" id="user" title="Perfil do usuário" routerLinkActive="active">
+        <span>Login</span>
     </a>
 </ng-template>
 <ng-template #userProfile>
-    <a routerLink="/profile" id="user" title="Perfil do usuário" routerLinkActive="active" ariaCurrentWhenActive="page">
+    <a routerLink="/profile" id="user" title="Perfil do usuário" routerLinkActive="active">
         <img src="{{user.photoURL}}" alt="Perfil de {{user.displayName}}" referrerpolicy="no-referrer">
+        <span>Perfil</span>
     </a>
 </ng-template>

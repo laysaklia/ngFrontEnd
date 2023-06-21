@@ -1,5 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
+import { Thing } from 'src/app/models/thing.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -9,19 +10,24 @@ import { environment } from 'src/environments/environment';
 })
 export class HomeComponent {
 
-  constructor(private http: HttpClient) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'observe': 'response'
-      })
-    };
+  things: any;
 
-    this.http.get(environment.apiURL + '/recipes', httpOptions)
-      .subscribe((response) => {
-        console.log(response);
-      });
+  httpOptions: any = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+      'observe': 'response'
+    })
+  };
+
+  constructor(private http: HttpClient) {
+      this.getAll();
   }
 
+  getAll() {
+    this.http.get(environment.apiURL + '/things?status_ne=del&_sort=date&_order=desc', this.httpOptions)
+    .subscribe((data) => {
+      this.things = data;
+    });
+  }
 
 }

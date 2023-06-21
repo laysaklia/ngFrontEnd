@@ -16,6 +16,8 @@ import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
 import { provideAuth, getAuth } from '@angular/fire/auth';
 import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
+import { NewComponent } from './pages/new/new.component';
+import { ViewComponent } from './pages/view/view.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { ProfileComponent } from './pages/profile/profile.component';
     E404Component,
     ThemeComponent,
     LoginComponent,
-    ProfileComponent
+    ProfileComponent,
+    NewComponent,
+    ViewComponent
   ],
   imports: [
     HttpClientModule,

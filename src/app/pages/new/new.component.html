@@ -1,0 +1,38 @@
+<h2>Novo treco</h2>
+
+<form *ngIf="!success" [formGroup]="newThingForm" (ngSubmit)="saveThing()">
+
+    <p>Preencha os campos abaixo para cadastrar um novo treco.</p>
+
+    <p>
+        <label for="name">Nome:</label>
+        <input type="text" name="name" id="name" placeholder="Nome do novo treco" formControlName="name">
+        <span class="error-message" *ngIf="formErrors.name">{{ formErrors.name }}</span>
+    </p>
+
+    <p>
+        <label for="description">Descrição:</label>
+        <input type="text" name="description" id="description" placeholder="Descrição do novo treco" formControlName="description">
+        <span class="error-message" *ngIf="formErrors.description">{{ formErrors.description }}</span>
+    </p>
+
+    <p>
+        <label for="location">Localização:</label>
+        <input type="text" name="location" id="location" placeholder="Localização do novo treco" formControlName="location">
+        <span class="error-message" *ngIf="formErrors.location">{{ formErrors.location }}</span>
+    </p>
+
+    <p>
+        <button type="submit" [disabled]="newThingForm.invalid">Cadastrar</button>
+    </p>
+
+</form>
+
+<div *ngIf="success">
+
+    <h3>Oba!</h3>
+    <p>Seu treco foi cadastrado.</p>
+    <p><em>Obrigado...</em></p>
+    <p><a href="Cadastrar outro treco" (click)="reset()">Cadastrar outro treco</a></p>
+
+</div>

@@ -1,48 +1,29 @@
 {
-  "contacts": [
+  "contacts": [],
+  "things": [
     {
-      "name": null,
-      "email": null,
-      "subject": null,
-      "message": null,
-      "date": "2023-06-19T19:23:25.748Z",
-      "status": "sended",
+      "name": "Abobora",
+      "description": "Que nome estranho para uma coisa.",
+      "location": "Fruteira da cozinha",
+      "date": "2023-06-21T17:15:29.257Z",
+      "status": "off",
       "id": 1
     },
     {
-      "name": "",
-      "email": null,
-      "subject": null,
-      "message": null,
-      "date": "2023-06-19T19:24:38.826Z",
-      "status": "sended",
+      "name": "Biscoito",
+      "description": "Biscoito não é bolacha.",
+      "location": "Bolacheira da mesa",
+      "date": "2023-06-21T17:16:22.394Z",
+      "status": "on",
       "id": 2
     },
     {
-      "name": "Joca Silva",
-      "email": "joca@silva.com",
-      "subject": "sadfdsaf",
-      "message": "sdfsadf dsa",
-      "date": "2023-06-19T19:46:00.721Z",
-      "status": "sended",
+      "name": "Bolacha",
+      "description": "Bolacha não é biscoito.",
+      "location": "Biscoiteira do armário.",
+      "date": "2023-06-21T17:16:47.802Z",
+      "status": "on",
       "id": 3
-    }
-  ],
-  "recipes": [
-    {
-      "date": "2023-06-19 14:08:00",
-      "name": "Bolo de fubá",
-      "ingredients": {
-        "Farinha de Trigo": "400g",
-        "Açúcar": "200g",
-        "Óleo de soja": "250ml",
-        "Leite": "300ml",
-        "Fubá": "400ml",
-        "Fermento em pó": "50g"
-      },
-      "preparo": "Bata tudo na batedeira, coloque em forma untada e leve ao forno médio, pré-aquecido, por 40 minutos.",
-      "visible": "on",
-      "id": 1
     }
   ]
 }

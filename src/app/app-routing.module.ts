@@ -7,6 +7,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { ProfileComponent } from './pages/profile/profile.component';
 
 import { AuthGuard, redirectLoggedInTo, redirectUnauthorizedTo } from '@angular/fire/auth-guard';
+import { NewComponent } from './pages/new/new.component';
+import { ViewComponent } from './pages/view/view.component';
 
 const toLogin = () => redirectUnauthorizedTo(['/user/login']);
 const toHome = () => redirectLoggedInTo(['/admin/home']);
@@ -14,6 +16,20 @@ const toHome = () => redirectLoggedInTo(['/admin/home']);
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
   { path: 'home', title: 'Página inicial', component: HomeComponent },
+  {
+    path: 'new',
+    title: 'Novo treco',
+    component: NewComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: toLogin }
+  },
+  {
+    path: 'view/:id',
+    title: 'Ver treco',
+    component: ViewComponent,
+    canActivate: [AuthGuard],
+    data: { authGuardPipe: toLogin }
+  },
   { path: 'contacts', title: 'Faça Contato', component: ContactsComponent },
   {
     path: 'login',

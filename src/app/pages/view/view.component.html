@@ -1,0 +1,21 @@
+<div *ngIf="thing">
+    <h2>Detalhes de {{thing.name}}</h2>
+    <ul>
+        <li><strong>ID: </strong>{{thing.id}}</li>
+        <li><strong>Cadastro: </strong>{{ thing.date | date: 'dd/MM/YYYY' }} às {{thing.date | date: 'HH:mm'}}</li>
+        <li><strong>Nome: </strong>{{thing.name}}</li>
+        <li><strong>Descrição: </strong>{{thing.description}}</li>
+        <li><strong>Localização: </strong>{{thing.location}}</li>
+        <li>
+            <strong>Status: </strong>
+            {{thing.valueStatus}}
+            (<a routerLink="/status/{{thing.id}}">{{thing.notValueStatus}}</a>)
+        </li>
+    </ul>
+    <h4>Ações:</h4>
+    <ul>
+        <li><a routerLink="/home">Voltar</a></li>
+        <li *ngIf="this.thing.status === 'on'"><a routerLink="/edit/{{thing.id}}">Editar</a></li>
+        <li *ngIf="this.thing.status === 'on'"><a routerLink="/delete/{{thing.id}}">Apagar</a></li>
+    </ul>
+</div>

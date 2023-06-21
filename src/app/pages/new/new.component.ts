@@ -1,65 +1,51 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Contact } from '../../models/contact.model';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Thing } from 'src/app/models/thing.model';
 import { environment } from 'src/environments/environment';
 
 @Component({
-  selector: 'app-contacts',
-  templateUrl: './contacts.component.html',
-  styleUrls: ['./contacts.component.css'] 
+  selector: 'app-new',
+  templateUrl: './new.component.html',
+  styleUrls: ['./new.component.css']
 })
-export class ContactsComponent {
+export class NewComponent {
 
-  contactForm!: FormGroup;
-  contact!: Contact;
+  newThingForm!: FormGroup;
+  thing!: Thing;
   success: boolean = false;
-  firstName: String = "Visitante";
 
   validationMessages: any = {
-    name: {
-      required: 'O nome é obrigatório.'
-    },
-    email: {
-      required: 'O email é obrigatório.',
-      email: 'Digite um email válido.'
-    },
-    subject: {
-      required: 'O assunto é obrigatório.'
-    },
-    message: {
-      required: 'A mensagem é obrigatória.'
-    }
+    name: { required: 'O nome é obrigatório.' },
+    description: { required: 'A descrição é obrigatória.' },
+    location: { required: 'A localização é obrigatória.' }
   }
 
   formErrors: any = {
     name: '',
-    email: '',
-    subject: '',
-    message: ''
+    description: '',
+    location: ''
   }
 
   constructor(
     private formBuilder: FormBuilder,
     private http: HttpClient
-  ) {
-  }
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
     this.success = false;
 
-    this.contactForm.valueChanges.subscribe(() => {
+    this.newThingForm.valueChanges.subscribe(() => {
       this.updateValidationMessages();
     });
   }
 
   createForm() {
-    this.contactForm = this.formBuilder.group({
+    this.newThingForm = this.formBuilder.group({
       name: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      subject: ['', Validators.required],
-      message: ['', Validators.required]
+      description: ['', Validators.required],
+      location: ['', Validators.required]
     });
   }
 
@@ -69,7 +55,7 @@ export class ContactsComponent {
 
         this.formErrors[field] = '';
 
-        const control = this.contactForm.get(field);
+        const control = this.newThingForm.get(field);
         if (control && control.dirty && !control.valid) {
           const messages = this.validationMessages[field];
           for (const key in control.errors) {
@@ -82,15 +68,13 @@ export class ContactsComponent {
     }
   }
 
-  sendContact() {
+  saveThing() {
 
-    if (this.contactForm.invalid) {
-      return;
-    }
+    if (this.newThingForm.invalid)  return;
 
-    this.contact = this.contactForm.value;
-    this.contact.date = new Date();
-    this.contact.status = 'sended';
+    this.thing = this.newThingForm.value;
+    this.thing.date = new Date();
+    this.thing.status = 'on';
 
     const httpOptions = {
       headers: new HttpHeaders({
@@ -98,11 +82,9 @@ export class ContactsComponent {
       })
     };
 
-    this.http.post(environment.apiURL + '/contacts', this.contact, httpOptions)
+    this.http.post(environment.apiURL + '/things', this.thing, httpOptions)
       .subscribe(
         (data) => {
-          console.log(data);
-          this.firstName = this.contact.name.split(' ')[0];
           this.success = true;
         },
         (error) => {
@@ -110,7 +92,7 @@ export class ContactsComponent {
         }
       );
 
-    this.contactForm.reset();
+    this.newThingForm.reset();
 
   }
 
@@ -119,4 +101,4 @@ export class ContactsComponent {
     return false;
   }
 
-} 
+}
