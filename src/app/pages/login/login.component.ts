@@ -17,8 +17,6 @@ export class LoginComponent {
 
   login(provider: string) {
 
-    console.log(environment.firebase.apiKey);
-
     signInWithPopup(this.auth, new GoogleAuthProvider())
       // signInWithRedirect(this.auth, new GoogleAuthProvider())
       .then((a) => {

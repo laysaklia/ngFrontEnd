@@ -101,7 +101,6 @@ export class ContactsComponent {
     this.http.post(environment.apiURL + '/contacts', this.contact, httpOptions)
       .subscribe(
         (data) => {
-          console.log(data);
           this.firstName = this.contact.name.split(' ')[0];
           this.success = true;
         },

@@ -20,7 +20,6 @@ export class ProfileComponent {
     this.authStateSubscription = this.authState$.subscribe(
       (userData: User | null) => {
         if (userData) this.user = userData
-        console.log(this.user)
       }
     )
   }
